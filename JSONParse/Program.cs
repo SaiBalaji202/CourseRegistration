@@ -14,8 +14,9 @@ namespace JSONParse
         static void Main(string[] args)
         {
             var course1 = new Course("JSON", "Balaji");
+            course1.SaveToFile();
             var course2 = new Course("Node", "ji");
-
+            course2.SaveToFile();
 
             var student1 = new Student()
             {

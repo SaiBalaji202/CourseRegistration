@@ -1,4 +1,8 @@
-﻿namespace JSONParse
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
+using System.IO;
+
+namespace JSONParse
 {
     class Course
     {
@@ -10,6 +14,25 @@
         {
             CourseName = courseName;
             Instructor = instructor;
+        }
+
+        public void SaveToFile()
+        {
+            // Courses/courses.json
+            if (!Directory.Exists("Courses"))
+            {
+                Directory.CreateDirectory("Courses");
+                File.WriteAllText("Courses/courses.json", "[]");
+            }
+
+            // 1. Read all Courses from courses.json to a list
+            var jsonString = File.ReadAllText("Courses/courses.json");
+            var courseList = JsonConvert.DeserializeObject<List<Course>>(jsonString);
+
+            // 2. Add Current Course to that list
+            courseList.Add(this);
+            // 3. Save the resultant list back to the courses.json
+            File.WriteAllText("Courses/courses.json", JsonConvert.SerializeObject(courseList, Formatting.Indented));
         }
 
         public override string ToString()
