@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace JSONParse
 {
@@ -9,6 +11,25 @@ namespace JSONParse
         public string Email { get; set; }
         public List<string> IntrestedSubjects { get; set; }
         public List<Course> Courses { get; set; }
+
+        public void SaveToFile()
+        {
+            if (!Directory.Exists("Students"))
+            {
+                Directory.CreateDirectory("Students");
+            }
+            var jsonData = JsonConvert.SerializeObject(this, Formatting.Indented);
+            File.WriteAllText($"Students/{this.Name}.json", jsonData);
+            //Students/Sai.json
+        }
+
+        public static Student LoadFromFile(string strName)
+        {
+            if (!File.Exists($"Students/{strName}.json"))
+                return null;
+            var jsonData = File.ReadAllText($"Students/{strName}.json");
+            return JsonConvert.DeserializeObject<Student>(jsonData);
+        }
 
         public override string ToString()
         {

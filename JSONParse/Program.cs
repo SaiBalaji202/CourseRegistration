@@ -11,7 +11,6 @@ namespace JSONParse
          * 
          * */
 
-
         static void Main(string[] args)
         {
             var course1 = new Course("JSON", "Balaji");
@@ -28,15 +27,21 @@ namespace JSONParse
 
             var student2 = new Student()
             {
-                Name = "Ram",
+                Name = "Raj",
                 Email = "ra,@gmail.com",
                 IntrestedSubjects = new List<string>() { "Node", "C" },
                 Courses = new List<Course>() { course1 }
             };
-
-            Console.WriteLine(student1);
-            Console.WriteLine(student2);
-
+            student2.SaveToFile();
+            //
+            //            Console.WriteLine(student1);
+            //            Console.WriteLine(student2);
+            var sai = Student.LoadFromFile("Sai");
+            Console.WriteLine(sai);
+            var ram = Student.LoadFromFile("Ram");
+            Console.WriteLine(ram);
+            var raj = Student.LoadFromFile("Raj");
+            Console.WriteLine(raj);
         }
     }
 }
